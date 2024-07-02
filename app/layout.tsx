@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -64,7 +64,6 @@ function MainNavMenu() {
             </Link>
           </nav>
           <div className="ml-auto flex items-center space-x-4">
-            {/* <Search /> */}
             {/* <UserNav /> */}
             <LoginButton></LoginButton>
           </div>
@@ -72,6 +71,14 @@ function MainNavMenu() {
       </div>
     </div>
   );
+}
+
+async function AccountStatus() {
+  const session = await auth();
+  if (!session?.user) return <LoginButton></LoginButton>;
+  else {
+    return <UserDropdownMenu></UserDropdownMenu>;
+  }
 }
 
 function LoginButton() {
@@ -99,7 +106,7 @@ function Search() {
   );
 }
 
-export function UserNav() {
+export function UserDropdownMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
