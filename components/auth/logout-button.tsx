@@ -1,5 +1,5 @@
-import { signOut } from "next-auth/react";
-import { Button } from "../ui/button";
+import { signOut } from "@/auth";
+
 
 export function Logout() {
   return (
@@ -9,7 +9,7 @@ export function Logout() {
         await signOut({ redirect: true });
       }}
     >
-      <Button type="submit">Logout</Button>
+      <button type="submit">Logout</button>
     </form>
   );
 }

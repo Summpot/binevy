@@ -51,7 +51,7 @@ function MainNavMenu() {
           <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
             <Link
               href="/"
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-lg font-medium transition-colors hover:text-primary"
             >
               Binevy
             </Link>
@@ -92,7 +92,7 @@ function UserDropdownMenu({ user }: { user: User }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.image!} alt={`@${user.id}`} />
+            <AvatarImage src={user.image!} alt={`@${user.name}`} />
             <AvatarFallback>{user.name}</AvatarFallback>
           </Avatar>
         </Button>
