@@ -1,21 +1,5 @@
-import CopyPlugin from "copy-webpack-plugin";
-import path from "path";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config, { isServer }) => {
-    config.plugins.push(
-        new CopyPlugin({
-          patterns: [
-            {
-              from: "drizzle/migrations",
-              to: ".next/migrations",
-            },
-          ],
-        })
-      );
-    return config;
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;
