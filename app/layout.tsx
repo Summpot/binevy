@@ -65,7 +65,7 @@ function MainNavMenu() {
           </nav>
           <div className="ml-auto flex items-center space-x-4">
             {/* <UserNav /> */}
-            <LoginButton></LoginButton>
+            <AccountStatus></AccountStatus>
           </div>
         </div>
       </div>
