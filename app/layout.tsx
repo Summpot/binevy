@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { auth, signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -108,6 +108,19 @@ function Search() {
   );
 }
 
+function LogoutButton() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signOut();
+      }}
+    >
+      <button type="submit">Sign Out</button>
+    </form>
+  );
+}
+
 function UserDropdownMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
@@ -146,7 +159,7 @@ function UserDropdownMenu({ user }: { user: User }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Log out
+          <LogoutButton></LogoutButton>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
