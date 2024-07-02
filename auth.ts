@@ -1,9 +1,9 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import { db } from "./schema"
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "./prisma/db";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    providers: [GitHub],
-    adapter: DrizzleAdapter(db),
-})
+  providers: [GitHub],
+  adapter: PrismaAdapter(prisma),
+});
