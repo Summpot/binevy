@@ -79,7 +79,7 @@ async function AccountStatus() {
   const session = await auth();
   if (!session?.user) return <LoginButton></LoginButton>;
   else {
-    return <UserDropdownMenu></UserDropdownMenu>;
+    return <UserDropdownMenu user={session.user}></UserDropdownMenu>;
   }
 }
 
