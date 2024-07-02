@@ -29,6 +29,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "next-auth";
 import { use } from "react";
+import { Login } from "@/components/auth/login-button";
+import { LogOut } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,23 +79,10 @@ function MainNavMenu() {
 
 async function AccountStatus() {
   const session = await auth();
-  if (!session?.user) return <LoginButton></LoginButton>;
+  if (!session?.user) return <Login></Login>;
   else {
     return <UserDropdownMenu user={session.user}></UserDropdownMenu>;
   }
-}
-
-function LoginButton() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn("github");
-      }}
-    >
-      <Button type="submit">Signin with GitHub</Button>
-    </form>
-  );
 }
 
 function Search() {
@@ -105,19 +94,6 @@ function Search() {
         className="md:w-[100px] lg:w-[300px]"
       />
     </div>
-  );
-}
-
-function LogoutButton() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <button type="submit">Sign Out</button>
-    </form>
   );
 }
 
@@ -159,7 +135,7 @@ function UserDropdownMenu({ user }: { user: User }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogoutButton></LogoutButton>
+          <LogOut></LogOut>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
