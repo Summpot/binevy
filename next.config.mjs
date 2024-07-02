@@ -4,8 +4,7 @@ import path from "path";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.plugins.push(
+    config.plugins.push(
         new CopyPlugin({
           patterns: [
             {
@@ -15,7 +14,6 @@ const nextConfig = {
           ],
         })
       );
-    }
     return config;
   },
 };
