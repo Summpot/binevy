@@ -27,6 +27,8 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { User } from "next-auth";
+import { use } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -89,7 +91,7 @@ function LoginButton() {
         await signIn("github");
       }}
     >
-      <button type="submit">Signin with GitHub</button>
+      <Button type="submit">Signin with GitHub</Button>
     </form>
   );
 }
@@ -106,14 +108,14 @@ function Search() {
   );
 }
 
-export function UserDropdownMenu() {
+function UserDropdownMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={user.image!} alt={`@${user.id}`} />
+            <AvatarFallback>{user.name}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
