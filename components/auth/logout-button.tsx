@@ -3,8 +3,13 @@ import { Button } from "../ui/button";
 
 export function Logout() {
   return (
-    <Button onClick={() => signOut({ redirect: true })}>
-      Logout
-    </Button>
+    <form
+      action={async () => {
+        "use server";
+        await signOut({ redirect: true });
+      }}
+    >
+      <Button type="submit">Logout</Button>
+    </form>
   );
 }
