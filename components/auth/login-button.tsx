@@ -7,7 +7,7 @@ export function Login() {
     <form
       action={async () => {
         "use server";
-        await signIn();
+        await signIn("github");
       }}
     >
       <Button type="submit">Login with Github</Button>
