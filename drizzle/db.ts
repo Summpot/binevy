@@ -1,4 +1,8 @@
-import { drizzle } from "drizzle-orm/vercel-postgres";
-import { sql } from "@vercel/postgres";
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
 
-export const db = drizzle(sql);
+const client = createClient({
+  url: process.env.TURSO_URL as string,
+  authToken: process.env.TURSO_AUTH_TOKEN as string,
+});
+export const db = drizzle(client);

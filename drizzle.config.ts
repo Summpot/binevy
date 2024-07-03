@@ -1,10 +1,14 @@
 import { defineConfig } from "drizzle-kit";
 
+require("@dotenvx/dotenvx").config();
+
 export default defineConfig({
-  dialect: "postgresql",
+  dialect: "sqlite",
   out: "./drizzle/migrations",
   schema: "./drizzle/schema.ts",
+  driver: "turso",
   dbCredentials: {
-    url: process.env.POSTGRES_URL as string,
+    url: process.env.TURSO_URL as string,
+    authToken: process.env.TURSO_AUTH_TOKEN as string,
   },
 });
