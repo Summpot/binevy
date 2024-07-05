@@ -36,9 +36,6 @@ export function UserDropdownMenu({ user }: { user: User }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-        <DropdownMenuItem>
-            <Link href="/dashboard">Dashboard</Link>
-          </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href={`/${user.name}`}>Profile</Link>
           </DropdownMenuItem>

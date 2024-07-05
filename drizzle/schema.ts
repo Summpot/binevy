@@ -3,18 +3,34 @@ import {
   sqliteTable,
   text,
   primaryKey,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { relations } from "drizzle-orm";
 
-export const users = sqliteTable("user", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
-  email: text("email").notNull(),
-  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
-  image: text("image"),
-});
+export const users = sqliteTable(
+  "user",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: text("name"),
+    email: text("email").notNull(),
+    emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
+    image: text("image"),
+  },
+  (table) => {
+    return {
+      nameIdx: uniqueIndex("name_idx").on(table.name),
+      emailIdx: uniqueIndex("email_index").on(table.email),
+    };
+  }
+);
+
+export const usersRelations = relations(users, ({ many }) => ({
+  projects: many(projects),
+}));
 
 export const accounts = sqliteTable(
   "account",
@@ -89,9 +105,19 @@ export const projects = sqliteTable("project", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
+  name: text("name").notNull(),
   ownerId: text("ownerId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  description: text("description"),
+  description: text("description").notNull(),
 });
+
+export const projectsRelations = relations(projects, ({ one }) => ({
+  owner: one(users, {
+    fields: [projects.ownerId],
+    references: [users.id],
+  }),
+}));
+
+export const insertProjectSchema = createInsertSchema(projects);
+export const selectProjectSchema = createSelectSchema(projects);

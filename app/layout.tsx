@@ -3,13 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { auth } from "@/auth";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { User } from "next-auth";
-import { Login } from "@/components/auth/login-button";
-import { Logout } from "@/components/auth/logout-button";
 import { UserAvatar } from "@/components/auth/user-avatar";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +13,18 @@ export const metadata: Metadata = {
   description: "A self-hosted binary file hosting platform.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  console.log(session?.user?.id);
   return (
     <html lang="en">
       <body className={inter.className}>
         <MainNavMenu></MainNavMenu>
-        {children}
+        <SessionProvider session={session}>{children}</SessionProvider>
       </body>
     </html>
   );
